@@ -1,0 +1,6 @@
+# Finales de linea LF en todas las plataformas (las comparaciones byte a byte de la replicacion dependen de esto)
+* text=auto eol=lf
+*.npz binary
+*.pdf binary
+*.png binary
+*.xlsx binary

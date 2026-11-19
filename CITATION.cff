@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "Si usás este software, citá la tesis."
+title: "GTVP-VAR: vectores autorregresivos con parámetros generalizados que varían en el tiempo"
+type: software
+authors:
+  - family-names: Grillo
+    given-names: Ezequiel
+license: MIT
+repository-code: "https://github.com/EzequielGrillo/gtvp-var"
+keywords: [VAR, random forest, macroeconomic random forest, time-varying parameters, inflation forecasting, Argentina]
+preferred-citation:
+  type: thesis
+  title: "Pronóstico de inflación en Argentina con modelos de Machine Learning: el GTVP-VAR"
+  authors:
+    - family-names: Grillo
+      given-names: Ezequiel
+  institution:
+    name: "Universidad de Buenos Aires"
+  year: 2026
+references:
+  - type: article
+    title: "The macroeconomy as a random forest"
+    authors:
+      - family-names: Goulet Coulombe
+        given-names: Philippe
+    journal: "Journal of Applied Econometrics"
+    volume: 39
+    issue: 3
+    year: 2024
