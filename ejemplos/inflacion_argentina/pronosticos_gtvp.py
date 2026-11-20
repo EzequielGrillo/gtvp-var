@@ -1,4 +1,4 @@
-"""Pronosticos pseudo fuera de muestra del GTVP-VAR (seccion 4 de la tesis).
+"""Pronosticos pseudo fuera de muestra del GTVP-VAR.
 
 En cada origen (2016-07 a 2026-07) se estima un bosque de 1000 arboles con la ventana de 272 pares que termina en el
 origen (sin el par con objetivo dic-2023) y los hiperparametros elegidos en el julio anterior; se pronostica iterando
@@ -6,7 +6,7 @@ h = 1..6 con la media de las matrices de los arboles. Se repite con 3 semillas (
 final usa el bosque combinado (los 3000 arboles).
 Salidas: resultados/01_pronosticos/pronosticos_gtvp_final_h2{,_sem1,_sem2,_sem3}.csv,
          resultados/02_evaluacion/gtvp_final_h2.md; bosques en trabajo/bosques_gtvp/sem{N}/ (se reutilizan)
-Uso: python -m replicacion.pronosticos_gtvp
+Uso: python -m ejemplos.inflacion_argentina.pronosticos_gtvp
 """
 import time
 

@@ -1,21 +1,22 @@
-"""Corre la replicacion de la tesis de punta a punta, en orden y de forma reanudable.
+"""Corre el ejemplo de punta a punta, en orden y de forma reanudable.
 
 Etapas (entre parentesis, el tiempo aproximado con 12 nucleos):
-  1. hiperparametros  busqueda anual de hiperparametros del GTVP-VAR, Anexo D             (~3 h)
+  1. hiperparametros  busqueda anual de hiperparametros del GTVP-VAR                     (~3 h)
   2. pronosticos      pronosticos pseudo fuera de muestra del GTVP-VAR, 3 semillas        (~1 h)
   3. mrf              busqueda y pronosticos del MRF                                       (~6 h)
-  4. evaluacion       tablas 2, 3, 6 y 7                                                   (~1 min)
-  5. figuras          figuras 1 y 2                                                        (~1 min)
+  4. evaluacion       MAE/RMSE relativos al RW, Giacomini-White y encompassing             (~1 min)
+  5. figuras          figuras de los pronosticos y del error acumulado                     (~1 min)
 
 Cada etapa se salta si sus salidas ya existen (usar --rehacer para forzarla). Los resultados se escriben en una
-carpeta nueva (por defecto replica/), que se inicializa con los pronosticos de los modelos de comparacion (RW, VAR,
-BVAR, FAVAR, TVP-VAR, TVP-VAR-SV, RF y REM), que no se recalculan. Al final se comparan las salidas con resultados/.
+carpeta nueva (por defecto replica/, dentro del ejemplo), que se inicializa con los pronosticos de los modelos de
+comparacion (RW, VAR, BVAR, FAVAR, TVP-VAR, TVP-VAR-SV, RF y REM), que no se recalculan. Al final se comparan las
+salidas con resultados/. Se corre desde la raiz del repositorio.
 
 Uso:
-  python -m replicacion.correr_todo                       # todas las etapas
-  python -m replicacion.correr_todo evaluacion figuras    # solo algunas
-  python -m replicacion.correr_todo --salida otra/ --rehacer
-  python -m replicacion.correr_todo --verificar           # solo compara replica/ con resultados/
+  python -m ejemplos.inflacion_argentina.correr_todo                       # todas las etapas
+  python -m ejemplos.inflacion_argentina.correr_todo evaluacion figuras    # solo algunas
+  python -m ejemplos.inflacion_argentina.correr_todo --salida otra/ --rehacer
+  python -m ejemplos.inflacion_argentina.correr_todo --verificar           # solo compara replica/ con resultados/
 """
 import argparse
 import os
@@ -25,7 +26,9 @@ import sys
 import time
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parents[1]
+RAIZ = Path(__file__).resolve().parent              # carpeta del ejemplo
+REPO = RAIZ.parents[1]
+MODULO = "ejemplos.inflacion_argentina"
 REFERENCIA = RAIZ / "resultados"
 COMPARACION = ["pronosticos_lineales_final.csv", "pronosticos_tvp_kk.csv", "pronosticos_tvp_sv.csv",
                "pronosticos_rf_hiper_gtvp.csv", "pronosticos_rem.csv"]
@@ -39,8 +42,8 @@ ETAPAS = {
     "mrf": ("mrf", [], ["01_pronosticos/pronosticos_mrf_hiper.csv"]),
     "evaluacion": ("evaluacion", [], ["02_evaluacion/evaluacion_final.md", "02_evaluacion/encompassing.md",
                                       "02_evaluacion/errores_final.csv"]),
-    "figuras": ("figuras_pronostico", [], ["figuras_tesis/fig1_pronosticos.png", "figuras_tesis/fig2_cumsum_mae.png",
-                                           "figuras_tesis/cumsum_rmse.png"]),
+    "figuras": ("figuras_pronostico", [], ["figuras/pronosticos.png", "figuras/cumsum_mae.png",
+                                           "figuras/cumsum_rmse.png"]),
 }
 
 
@@ -58,10 +61,10 @@ def correr(nombre, salida, rehacer):
     if not rehacer and all((salida / s).exists() for s in salidas):
         print(f"[{nombre}] ya hecha, se salta (--rehacer para forzarla)", flush=True)
         return
-    print(f"[{nombre}] python -m replicacion.{modulo} {' '.join(args)}", flush=True)
+    print(f"[{nombre}] python -m {MODULO}.{modulo} {' '.join(args)}", flush=True)
     t0 = time.time()
     entorno = dict(os.environ, GTVP_RESULTADOS=str(salida))
-    subprocess.run([sys.executable, "-m", f"replicacion.{modulo}", *args], cwd=RAIZ, env=entorno, check=True)
+    subprocess.run([sys.executable, "-m", f"{MODULO}.{modulo}", *args], cwd=REPO, env=entorno, check=True)
     print(f"[{nombre}] lista en {(time.time() - t0) / 60:.1f} min", flush=True)
 
 
@@ -103,7 +106,7 @@ def main():
         sys.exit("La salida no puede ser resultados/: es la referencia contra la que se compara.")
     if not a.verificar:
         if not (RAIZ / "datos" / "Dataset_base.xlsx").exists():
-            sys.exit("Falta datos/Dataset_base.xlsx (no se distribuye; ver datos/LEEME.md).")
+            sys.exit(f"Falta {RAIZ / 'datos' / 'Dataset_base.xlsx'} (no se distribuye; ver datos/LEEME.md).")
         preparar(salida)
         for e in a.etapas or list(ETAPAS):
             correr(e, salida, a.rehacer)

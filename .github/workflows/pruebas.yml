@@ -19,5 +19,5 @@ jobs:
           pip install -e .
       - name: Pruebas
         run: pytest -q
-      - name: Ejemplo minimo
-        run: python ejemplos/ejemplo_minimo.py
+      - name: Ejemplo con datos sinteticos
+        run: python ejemplos/datos_sinteticos.py

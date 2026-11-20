@@ -1,4 +1,4 @@
-"""Busqueda anual de hiperparametros del GTVP-VAR (Anexo D de la tesis).
+"""Busqueda anual de hiperparametros del GTVP-VAR (validacion pseudo fuera de muestra).
 
 En cada fecha de ajuste T (julio, 2016-2026), solo con datos hasta T:
 - grilla lambda {0,15; 0,5; 1} x zeta {0,3; 0,6; 0,9} x mtry {0,075; 0,15} x bloque {12; 6} x nodo minimo {30; 15};
@@ -9,7 +9,7 @@ En cada fecha de ajuste T (julio, 2016-2026), solo con datos hasta T:
 - eleccion: la mejor; entre las que quedan a menos de 0,01 de ella, la mas regularizada (lambda mas alto, mtry mas
   bajo, zeta mas alto, nodo mas grande, bloque mas largo).
 Salida: resultados/03_hiperparametros/gtvp_var/{busqueda,eleccion}_T{T}_sindic23_v36_vm18.csv
-Uso: python -m replicacion.hiperparametros_gtvp [T=2026-07 ...]   (sin argumentos: las 11 fechas)
+Uso: python -m ejemplos.inflacion_argentina.hiperparametros_gtvp [T=2026-07 ...]   (sin argumentos: las 11 fechas)
 """
 import itertools
 import os

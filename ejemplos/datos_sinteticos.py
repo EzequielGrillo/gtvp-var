@@ -1,4 +1,4 @@
-"""Ejemplo minimo del GTVP-VAR con datos sinteticos (no hace falta el dataset de la tesis).
+"""Ejemplo minimo del GTVP-VAR con datos sinteticos.
 
 Se simula un VAR(1) bivariado cuya persistencia cambia segun un regimen observable:
 
@@ -7,7 +7,7 @@ Se simula un VAR(1) bivariado cuya persistencia cambia segun un regimen observab
 y se estima con GTVPVAR usando como estado S = [s_t, ruido, ruido, tendencia]. El bosque deberia recuperar las dos
 matrices A segun el valor de s_t.
 
-Uso: python ejemplos/ejemplo_minimo.py
+Uso: python ejemplos/datos_sinteticos.py
 """
 import numpy as np
 

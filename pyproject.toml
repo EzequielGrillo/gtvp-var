@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gtvpvar"
 version = "0.1.0"
-description = "GTVP-VAR: VAR con coeficientes que dependen del estado, estimados con un bosque aleatorio (extensión multivariada del Macroeconomic Random Forest)."
+description = "GTVP-VAR: VAR models with state-dependent coefficients estimated by random forests (a multivariate extension of the Macroeconomic Random Forest)."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Ezequiel Grillo" }]
@@ -16,14 +16,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering",
+    "Natural Language :: English",
     "Natural Language :: Spanish",
 ]
 
 [project.urls]
-Repositorio = "https://github.com/EzequielGrillo/gtvp-var"
+Repository = "https://github.com/EzequielGrillo/gtvp-var"
 
 [project.optional-dependencies]
-replicacion = ["pandas", "scikit-learn", "matplotlib", "openpyxl"]
+ejemplos = ["pandas", "scikit-learn", "matplotlib", "openpyxl"]
 test = ["pytest"]
 
 [tool.setuptools]

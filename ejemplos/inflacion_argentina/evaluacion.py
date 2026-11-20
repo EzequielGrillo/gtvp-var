@@ -1,4 +1,4 @@
-"""Evaluacion de los pronosticos (tablas 2, 3, 6 y 7 de la tesis).
+"""Evaluacion de los pronosticos: precision relativa al paseo aleatorio y encompassing.
 
 Objetivos 2017-01 a 2026-08 sin dic-2023 (115 por horizonte). Los pronosticos de los modelos de comparacion (RW, VAR,
 BVAR, FAVAR, TVP-VAR, TVP-VAR-SV, RF, REM) se leen de resultados/01_pronosticos; el GTVP-VAR y el MRF salen de
@@ -7,7 +7,7 @@ pronosticos_gtvp.py y mrf.py.
 - GTVP-VAR contra cada modelo;
 - encompassing entre GTVP-VAR y TVP-VAR (Harvey, Leybourne y Newbold, 1998), con perdida cuadratica y absoluta.
 Salidas: resultados/02_evaluacion/{evaluacion_final.md, encompassing.md, errores_final.csv}
-Uso: python -m replicacion.evaluacion
+Uso: python -m ejemplos.inflacion_argentina.evaluacion
 """
 import numpy as np
 import pandas as pd

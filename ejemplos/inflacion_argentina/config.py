@@ -1,12 +1,12 @@
-"""Definiciones comunes de la replicacion: rutas, datos, muestra de evaluacion y especificacion del GTVP-VAR."""
+"""Definiciones comunes del ejemplo: rutas, datos, muestra de evaluacion y especificacion del GTVP-VAR."""
 import os
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-RAIZ = Path(__file__).resolve().parents[1]
-DATOS = RAIZ / "datos"                          # Dataset_base.xlsx (no se distribuye; ver README)
+RAIZ = Path(__file__).resolve().parent         # carpeta del ejemplo
+DATOS = RAIZ / "datos"                          # Dataset_base.xlsx (no se distribuye; ver datos/LEEME.md)
 RESULTADOS = Path(os.environ.get("GTVP_RESULTADOS", RAIZ / "resultados"))   # otra carpeta: pruebas
 TRABAJO = Path(os.environ.get("GTVP_TRABAJO", RAIZ / "trabajo"))                    # bosques guardados y archivos intermedios (se puede borrar)
 

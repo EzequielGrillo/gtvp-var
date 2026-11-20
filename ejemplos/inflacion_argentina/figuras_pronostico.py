@@ -1,10 +1,10 @@
-"""Figuras 1 y 2 de la tesis.
-- Figura 1: inflacion observada y pronosticada a 1, 3 y 6 meses (escala logaritmica; los pronosticos por debajo de
+"""Figuras de los pronosticos.
+- pronosticos: inflacion observada y pronosticada a 1, 3 y 6 meses (escala logaritmica; los pronosticos por debajo de
   0,8% quedan en el piso del eje).
-- Figura 2: diferencia acumulada de error absoluto respecto del paseo aleatorio (y la version cuadratica), por fecha
+- cumsum_mae: diferencia acumulada de error absoluto respecto del paseo aleatorio (y la version cuadratica), por fecha
   del objetivo; dic-2023 aporta 0 y se sombrea. Lineas verticales: cambios de gobierno (dic-2019, dic-2023).
-Salidas: resultados/figuras_tesis/{fig1_pronosticos, fig2_cumsum_mae, cumsum_rmse}.{pdf,png}
-Uso: python -m replicacion.figuras_pronostico
+Salidas: resultados/figuras/{pronosticos, cumsum_mae, cumsum_rmse}.{pdf,png}
+Uso: python -m ejemplos.inflacion_argentina.figuras_pronostico
 """
 import matplotlib
 matplotlib.use("Agg")
@@ -18,7 +18,7 @@ from . import config as cf  # noqa: E402
 from .estilo import ESTILO, PAPER  # noqa: E402
 from .evaluacion import errores  # noqa: E402
 
-SALIDA = cf.RESULTADOS / "figuras_tesis"
+SALIDA = cf.RESULTADOS / "figuras"
 MARCA = {"GTVP-VAR": "o", "TVP-VAR": "s", "VAR": "^", "BVAR": "D", "FAVAR": "v", "RF": "P", "MRF": "X", "RW": "*"}
 TRAZO = {"GTVP-VAR": (0, (7, 2)), "TVP-VAR": (0, (3, 1.6)), "VAR": (0, (1, 1.6)), "BVAR": (0, (6, 1.6, 1.4, 1.6)),
          "FAVAR": (0, (9, 2, 1.4, 2)), "RF": (0, (2.4, 1.2)), "MRF": (0, (4, 1.2, 1.2, 1.2, 1.2, 1.2)),
@@ -64,7 +64,7 @@ def figura_pronosticos(E):
     fig.legend(hs, ["Observada"] + modelos, ncol=4, frameon=False, loc="lower center", bbox_to_anchor=(0.5, -0.005),
                handlelength=2.0, columnspacing=1.0, fontsize=7.5)
     for ext in ("pdf", "png"):
-        fig.savefig(SALIDA / f"fig1_pronosticos.{ext}", dpi=300, bbox_inches="tight")
+        fig.savefig(SALIDA / f"pronosticos.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -115,7 +115,7 @@ def figura_acumulada(E, cuadratica):
     fig.tight_layout(rect=(0, 0.1, 1, 1), w_pad=1.2)
     fig.legend(hs, modelos, ncol=len(modelos), frameon=False, loc="lower center", bbox_to_anchor=(0.5, -0.01),
                handlelength=2.6, columnspacing=1.4)
-    nombre = "cumsum_rmse" if cuadratica else "fig2_cumsum_mae"
+    nombre = "cumsum_rmse" if cuadratica else "cumsum_mae"
     for ext in ("pdf", "png"):
         fig.savefig(SALIDA / f"{nombre}.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)

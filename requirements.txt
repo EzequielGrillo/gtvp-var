@@ -1,4 +1,4 @@
-# Versiones con las que se verifico la replicacion exacta de la tesis (Python 3.12.10).
+# Versiones con las que se verificaron los resultados de ejemplos/inflacion_argentina (Python 3.12.10).
 # Otras versiones de numpy/numba pueden cambiar el ultimo digito (diferencias de LAPACK).
 numpy==1.26.4
 scipy==1.13.1

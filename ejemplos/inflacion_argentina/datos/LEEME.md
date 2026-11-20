@@ -1,9 +1,9 @@
 # Datos
 
-El dataset de la tesis (`Dataset_base.xlsx`) **no se distribuye**. Para replicar los resultados hay que ubicarlo en
-esta carpeta: `datos/Dataset_base.xlsx`. Git lo ignora, para que no se suba por error.
+El dataset del ejemplo (`Dataset_base.xlsx`) **no se distribuye**. Para correr el ejemplo hay que ubicarlo en esta
+carpeta (`ejemplos/inflacion_argentina/datos/Dataset_base.xlsx`). Git lo ignora, para que no se suba por error.
 
-Las fuentes, unidades y transformaciones de cada serie están en la Tabla 5 del anexo A de la tesis.
+Con el formato de abajo se puede armar la base de nuevo o adaptarla a otro país.
 
 ## Formato
 

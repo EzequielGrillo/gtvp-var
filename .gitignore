@@ -223,13 +223,12 @@ __marimo__/
 .streamlit/secrets.toml
 
 # --- gtvp-var ---
-# El dataset de la tesis no se distribuye
-datos/*
-!datos/LEEME.md
-# Bosques y resultados intermedios
+# Los datos de los ejemplos no se distribuyen
+**/datos/*
+!**/datos/LEEME.md
+# Bosques, archivos intermedios y salidas de correr_todo.py
 trabajo/
+replica/
 .numba_cache/
 *.npz
-!resultados/**/*.npz
-# Salidas de correr_todo.py
-replica/
+!**/resultados/**/*.npz

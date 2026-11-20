@@ -11,7 +11,7 @@ GTVP-VAR en esa fecha; 36 objetivos de validacion con pesos 0,5^(edad / 18), ree
 criterio: promedio sobre h del MAE / RW; desempate por la combinacion mas regularizada. Una combinacion para todos los h.
 Salidas: resultados/03_hiperparametros/mrf/{busqueda,eleccion}_T{T}.csv,
          resultados/01_pronosticos/pronosticos_mrf_hiper.csv
-Uso: python -m replicacion.mrf [buscar] [pronosticar]   (sin argumentos: las dos etapas)
+Uso: python -m ejemplos.inflacion_argentina.mrf [buscar] [pronosticar]   (sin argumentos: las dos etapas)
 """
 import itertools
 import os
