@@ -4,13 +4,13 @@
 
 [![Tests](https://github.com/EzequielGrillo/gtvp-var/actions/workflows/pruebas.yml/badge.svg)](https://github.com/EzequielGrillo/gtvp-var/actions/workflows/pruebas.yml)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/EzequielGrillo/gtvp-var/blob/main/LICENSE)
 
 `gtvpvar` es un paquete de Python para estimar VAR(p), con la cantidad de rezagos que se elija, cuyos coeficientes
 dependen del estado de la economía. Extiende el *Macroeconomic Random Forest* (MRF) de Goulet Coulombe (2024) a varias
 ecuaciones.
 
-[English](README.md) · **Español**
+[English](https://github.com/EzequielGrillo/gtvp-var/blob/main/README.md) · **Español**
 
 ---
 
@@ -40,6 +40,12 @@ Detalles del algoritmo:
 - **Implementación:** motor numérico en `numba` y árboles en paralelo con `joblib`.
 
 ## Instalación
+
+```bash
+pip install gtvpvar
+```
+
+O, para tener también los ejemplos, desde el repositorio:
 
 ```bash
 git clone https://github.com/EzequielGrillo/gtvp-var.git
@@ -98,7 +104,7 @@ m.guardar("bosque.npz")                     # y GTVPVAR.cargar("bosque.npz")
 
 ### Datos sintéticos
 
-[`ejemplos/datos_sinteticos.py`](ejemplos/datos_sinteticos.py) simula un VAR cuya persistencia cambia con un régimen
+[`ejemplos/datos_sinteticos.py`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/datos_sinteticos.py) simula un VAR cuya persistencia cambia con un régimen
 observable, y el bosque recupera las dos matrices:
 
 ```bash
@@ -112,7 +118,7 @@ Regimen s > 0  (A = 0,8 I): diagonal de A estimada = [0.71 0.74]
 
 ### Demostración con datos simulados: comparación con otros modelos
 
-[`ejemplos/simulacion.py`](ejemplos/simulacion.py) simula un VAR(2) de 3 variables con coeficientes que dependen del
+[`ejemplos/simulacion.py`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/simulacion.py) simula un VAR(2) de 3 variables con coeficientes que dependen del
 estado:
 
 - un régimen persistente cambia la persistencia y la constante;
@@ -125,16 +131,32 @@ Se pronostican las últimas 150 observaciones, reestimando cada 25 períodos.
 python ejemplos/simulacion.py
 ```
 
-<!-- SIMULACION -->
+RMSE relativo a un VAR(2) por MCO (promedio de las 3 variables), 150 pronósticos fuera de muestra por horizonte;
+media y desvío (entre paréntesis) en 5 simulaciones. Menor es mejor. Los hiperparámetros se eligieron con otra
+simulación, no con las de la evaluación. El "modelo verdadero" usa los coeficientes verdaderos y es una cota.
+
+| Modelo | h=1 | h=3 |
+|---|---:|---:|
+| RW | 1,075 (0,041) | 1,093 (0,033) |
+| VAR (MCO) | 1,000 (0,000) | 1,000 (0,000) |
+| VAR móvil (80 obs.) | 1,328 (0,181) | 1,290 (0,104) |
+| RF | 0,988 (0,062) | 0,982 (0,103) |
+| MRF | 0,946 (0,022) | 1,090 (0,106) |
+| **GTVP-VAR** | **0,957 (0,035)** | **0,980 (0,064)** |
+| Modelo verdadero | 0,778 (0,056) | — |
+
+El GTVP-VAR mejora al VAR lineal en los dos horizontes y tiene el menor error a h = 3, a la par del RF. A h = 1 el
+MRF es apenas mejor, pero sus pronósticos directos empeoran a h = 3. A diferencia del RF, el GTVP-VAR da un VAR
+interpretable en cada estado, que sigue de cerca a los coeficientes verdaderos:
 
 <p align="center">
-  <img src="ejemplos/resultados_simulacion/coeficientes.png" width="90%" alt="Coeficientes estimados y verdaderos"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/resultados_simulacion/coeficientes.png" width="90%" alt="Coeficientes estimados y verdaderos"><br>
   <em>Coeficientes verdaderos y estimados por el GTVP-VAR y por un VAR de ventana móvil.</em>
 </p>
 
 ### Pronóstico de inflación en Argentina
 
-[`ejemplos/inflacion_argentina/`](ejemplos/inflacion_argentina) es una aplicación completa:
+[`ejemplos/inflacion_argentina/`](https://github.com/EzequielGrillo/gtvp-var/tree/main/ejemplos/inflacion_argentina) es una aplicación completa:
 
 - un VAR de 5 variables con un estado de 70 columnas;
 - pronósticos pseudo fuera de muestra a 1-6 meses de 2017 a 2026;
@@ -184,23 +206,23 @@ REM es el Relevamiento de Expectativas de Mercado del BCRA. El GTVP-VAR tiene el
 el TVP-VAR y el TVP-VAR-SV, es significativamente mejor que el RW en los seis horizontes.
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/pronosticos.png" width="85%" alt="Inflación observada y pronosticada"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/pronosticos.png" width="85%" alt="Inflación observada y pronosticada"><br>
   <em>Inflación observada y pronosticada a 1, 3 y 6 meses.</em>
 </p>
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/cumsum_mae.png" width="85%" alt="Error absoluto acumulado frente al paseo aleatorio"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/cumsum_mae.png" width="85%" alt="Error absoluto acumulado frente al paseo aleatorio"><br>
   <em>Diferencia acumulada de error absoluto respecto del paseo aleatorio (negativo: mejor que el RW).</em>
 </p>
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/respuestas.png" width="85%" alt="Respuestas generalizadas a impulsos"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/respuestas.png" width="85%" alt="Respuestas generalizadas a impulsos"><br>
   <em>Respuestas de la inflación a una devaluación y a un aumento de la brecha cambiaria, con y sin control de
   cambios.</em>
 </p>
 
 La especificación, las etapas, los tiempos y las tablas completas están en
-[`ejemplos/inflacion_argentina/LEEME.md`](ejemplos/inflacion_argentina/LEEME.md).
+[`ejemplos/inflacion_argentina/LEEME.md`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/inflacion_argentina/LEEME.md).
 
 ## Estructura
 
@@ -229,5 +251,5 @@ está asociada al autor del MRF.
 
 ## Licencia
 
-[MIT](LICENSE). Para citar el paquete, ver [`CITATION.cff`](CITATION.cff).
+[MIT](https://github.com/EzequielGrillo/gtvp-var/blob/main/LICENSE). Para citar el paquete, ver [`CITATION.cff`](https://github.com/EzequielGrillo/gtvp-var/blob/main/CITATION.cff).
 

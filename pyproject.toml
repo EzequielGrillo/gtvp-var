@@ -1,27 +1,29 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "gtvpvar"
-version = "0.1.0"
+dynamic = ["version"]
 description = "GTVP-VAR: VAR models with state-dependent coefficients estimated by random forests (a multivariate extension of the Macroeconomic Random Forest)."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Ezequiel Grillo" }]
 requires-python = ">=3.10"
 dependencies = ["numpy", "scipy", "numba", "joblib"]
 keywords = ["VAR", "random forest", "macroeconomic random forest", "time-varying parameters", "forecasting"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering",
     "Natural Language :: English",
     "Natural Language :: Spanish",
 ]
 
 [project.urls]
+Homepage = "https://github.com/EzequielGrillo/gtvp-var"
 Repository = "https://github.com/EzequielGrillo/gtvp-var"
+Issues = "https://github.com/EzequielGrillo/gtvp-var/issues"
 
 [project.optional-dependencies]
 ejemplos = ["pandas", "scikit-learn", "matplotlib", "openpyxl"]
@@ -29,6 +31,9 @@ test = ["pytest"]
 
 [tool.setuptools]
 packages = ["gtvpvar"]
+
+[tool.setuptools.dynamic]
+version = { attr = "gtvpvar.__version__" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

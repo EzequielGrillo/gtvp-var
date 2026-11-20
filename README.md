@@ -4,12 +4,12 @@
 
 [![Tests](https://github.com/EzequielGrillo/gtvp-var/actions/workflows/pruebas.yml/badge.svg)](https://github.com/EzequielGrillo/gtvp-var/actions/workflows/pruebas.yml)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/EzequielGrillo/gtvp-var/blob/main/LICENSE)
 
 `gtvpvar` is a Python package for VAR(p) models, with any lag order, whose coefficients depend on the state of the
 economy. It extends Goulet Coulombe's (2024) *Macroeconomic Random Forest* (MRF) to several equations.
 
-**English** · [Español](README.es.md)
+**English** · [Español](https://github.com/EzequielGrillo/gtvp-var/blob/main/README.es.md)
 
 ---
 
@@ -39,6 +39,12 @@ Algorithm details:
 - **Implementation:** numerical core in `numba`, trees fitted in parallel with `joblib`.
 
 ## Installation
+
+```bash
+pip install gtvpvar
+```
+
+Or, to get the examples as well, from the repository:
 
 ```bash
 git clone https://github.com/EzequielGrillo/gtvp-var.git
@@ -100,7 +106,7 @@ The API is in Spanish: `matrices_var` (VAR matrices), `pronosticar` (forecast), 
 
 ### Synthetic data
 
-[`ejemplos/datos_sinteticos.py`](ejemplos/datos_sinteticos.py) simulates a VAR whose persistence switches with an
+[`ejemplos/datos_sinteticos.py`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/datos_sinteticos.py) simulates a VAR whose persistence switches with an
 observable regime; the forest recovers both matrices:
 
 ```bash
@@ -114,7 +120,7 @@ Regimen s > 0  (A = 0,8 I): diagonal de A estimada = [0.71 0.74]
 
 ### Simulation study: comparison with other models
 
-[`ejemplos/simulacion.py`](ejemplos/simulacion.py) simulates a 3-variable VAR(2) with state-dependent coefficients:
+[`ejemplos/simulacion.py`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/simulacion.py) simulates a 3-variable VAR(2) with state-dependent coefficients:
 
 - a persistent regime changes the persistence and the intercept;
 - a continuous variable changes, non-linearly, the effect of one variable on another;
@@ -126,16 +132,32 @@ Each model forecasts the last 150 observations, re-estimated every 25 periods.
 python ejemplos/simulacion.py
 ```
 
-<!-- SIMULATION -->
+RMSE relative to an OLS VAR(2) (average over the 3 variables), 150 out-of-sample forecasts per horizon; mean and
+standard deviation (in parentheses) over 5 simulations. Lower is better. The hyperparameters were chosen on a separate
+simulation, not on the evaluation samples. The "true model" uses the true coefficients and is a lower bound.
+
+| Model | h=1 | h=3 |
+|---|---:|---:|
+| RW | 1.075 (0.041) | 1.093 (0.033) |
+| VAR (OLS) | 1.000 (0.000) | 1.000 (0.000) |
+| Rolling VAR (80 obs.) | 1.328 (0.181) | 1.290 (0.104) |
+| RF | 0.988 (0.062) | 0.982 (0.103) |
+| MRF | 0.946 (0.022) | 1.090 (0.106) |
+| **GTVP-VAR** | **0.957 (0.035)** | **0.980 (0.064)** |
+| True model | 0.778 (0.056) | — |
+
+The GTVP-VAR improves on the linear VAR at both horizons and has the lowest error at h = 3, about level with the RF.
+At h = 1 the MRF is slightly better, but its direct forecasts degrade at h = 3. Unlike the RF, the GTVP-VAR returns
+an interpretable VAR in each state, which tracks the true coefficients closely:
 
 <p align="center">
-  <img src="ejemplos/resultados_simulacion/coeficientes.png" width="90%" alt="True and estimated coefficients"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/resultados_simulacion/coeficientes.png" width="90%" alt="True and estimated coefficients"><br>
   <em>True coefficients and those estimated by the GTVP-VAR and by a rolling-window VAR.</em>
 </p>
 
 ### Forecasting inflation in Argentina
 
-[`ejemplos/inflacion_argentina/`](ejemplos/inflacion_argentina) is a full application:
+[`ejemplos/inflacion_argentina/`](https://github.com/EzequielGrillo/gtvp-var/tree/main/ejemplos/inflacion_argentina) is a full application:
 
 - a 5-variable VAR with a 70-column state;
 - pseudo out-of-sample forecasts 1 to 6 months ahead, from 2017 to 2026;
@@ -186,23 +208,23 @@ GTVP-VAR has the lowest MAE from h = 3 onwards; together with the TVP-VAR and th
 better than the RW at all six horizons.
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/pronosticos.png" width="85%" alt="Observed and forecast inflation"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/pronosticos.png" width="85%" alt="Observed and forecast inflation"><br>
   <em>Observed and forecast inflation, 1, 3 and 6 months ahead.</em>
 </p>
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/cumsum_mae.png" width="85%" alt="Cumulative absolute error relative to the random walk"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/cumsum_mae.png" width="85%" alt="Cumulative absolute error relative to the random walk"><br>
   <em>Cumulative difference in absolute error relative to the random walk (negative: better than the RW).</em>
 </p>
 
 <p align="center">
-  <img src="ejemplos/inflacion_argentina/resultados/figuras/respuestas.png" width="85%" alt="Generalized impulse responses"><br>
+  <img src="https://raw.githubusercontent.com/EzequielGrillo/gtvp-var/main/ejemplos/inflacion_argentina/resultados/figuras/respuestas.png" width="85%" alt="Generalized impulse responses"><br>
   <em>Responses of inflation to a devaluation and to a widening of the exchange-rate gap, with and without capital
   controls.</em>
 </p>
 
 The specification, stages, run times and full tables are in
-[`ejemplos/inflacion_argentina/LEEME.md`](ejemplos/inflacion_argentina/LEEME.md) (in Spanish).
+[`ejemplos/inflacion_argentina/LEEME.md`](https://github.com/EzequielGrillo/gtvp-var/blob/main/ejemplos/inflacion_argentina/LEEME.md) (in Spanish).
 
 ## Repository layout
 
@@ -231,4 +253,4 @@ is not affiliated with the author of the MRF.
 
 ## License
 
-[MIT](LICENSE). To cite the package, see [`CITATION.cff`](CITATION.cff).
+[MIT](https://github.com/EzequielGrillo/gtvp-var/blob/main/LICENSE). To cite the package, see [`CITATION.cff`](https://github.com/EzequielGrillo/gtvp-var/blob/main/CITATION.cff).
